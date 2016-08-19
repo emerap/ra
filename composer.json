@@ -1,0 +1,26 @@
+{
+  "name": "emerap/ra",
+  "type": "library",
+  "description": "Rapid API core",
+  "keywords": [
+    "api"
+  ],
+  "homepage": "http://emerap.com",
+  "license": "GPL-3.0+",
+  "authors": [
+    {
+      "name": "Alexander Pokhodyun",
+      "email": "karbukul@yourtask.ru",
+      "homepage": "https://vk.com/karbunkul",
+      "role": "Project Founder"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Emerap\\Ra\\": "./src/"
+    }
+  }
+}
