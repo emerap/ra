@@ -11,7 +11,7 @@ class RaTokenDefinition extends DefinitionBase {
    * @inheritdoc
    */
   public function getMethodName() {
-    return 'ra.pair';
+    return 'ra.token';
   }
 
   /**

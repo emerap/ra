@@ -29,6 +29,7 @@ abstract class Base implements RaInterface {
       '\Emerap\Ra\RaDatatype\BooleanType',
       '\Emerap\Ra\RaDatatype\NumberType',
       '\Emerap\Ra\RaDatatype\StringType',
+      '\Emerap\Ra\RaDatatype\TokenType',
     );
     $datatypes = array();
     foreach ($datatypes_array as $namespace) {
