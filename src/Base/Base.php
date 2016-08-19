@@ -26,9 +26,9 @@ abstract class Base implements RaInterface {
    */
   public static function getCoreDatatypes() {
     $datatypes_array = array(
-      '\Emerap\RaTest\RaDatatype\BooleanType',
-      '\Emerap\RaTest\RaDatatype\NumberType',
-      '\Emerap\RaTest\RaDatatype\StringType',
+      '\Emerap\Ra\RaDatatype\BooleanType',
+      '\Emerap\Ra\RaDatatype\NumberType',
+      '\Emerap\Ra\RaDatatype\StringType',
     );
     $datatypes = array();
     foreach ($datatypes_array as $namespace) {
@@ -72,12 +72,12 @@ abstract class Base implements RaInterface {
    */
   public static function getCoreDefinitions() {
     $definitions_array = array(
-      '\Emerap\RaTest\RaDefinition\RaDatatypesDefinition',
-      '\Emerap\RaTest\RaDefinition\RaFormatsDefinition',
-      '\Emerap\RaTest\RaDefinition\RaMethodsDefinition',
-      '\Emerap\RaTest\RaDefinition\RaPairDefinition',
-      '\Emerap\RaTest\RaDefinition\RaTokenDefinition',
-      '\Emerap\RaTest\RaDefinition\RaVersionDefinition',
+      '\Emerap\Ra\RaDefinition\RaDatatypesDefinition',
+      '\Emerap\Ra\RaDefinition\RaFormatsDefinition',
+      '\Emerap\Ra\RaDefinition\RaMethodsDefinition',
+      '\Emerap\Ra\RaDefinition\RaPairDefinition',
+      '\Emerap\Ra\RaDefinition\RaTokenDefinition',
+      '\Emerap\Ra\RaDefinition\RaVersionDefinition',
     );
     $definitions = array();
     foreach ($definitions_array as $namespace) {
@@ -131,7 +131,7 @@ abstract class Base implements RaInterface {
    */
   public static function getCoreFormats() {
     $formats_array = array(
-      '\Emerap\RaTest\RaFormat\JsonFormat',
+      '\Emerap\Ra\RaFormat\JsonFormat',
     );
     $formats = array();
     foreach ($formats_array as $namespace) {
@@ -377,77 +377,77 @@ abstract class Base implements RaInterface {
    * @inheritdoc
    */
   public static function getRaBaseClass() {
-    return '\Emerap\RaTest\Base\Base';
+    return '\Emerap\Ra\Base\Base';
   }
 
   /**
    * @inheritdoc
    */
   public static function getRaClass() {
-    return '\Emerap\RaTest\Core\Ra';
+    return '\Emerap\Ra\Core\Ra';
   }
 
   /**
    * @inheritdoc
    */
   public static function getRaDatabaseClass() {
-    return '\Emerap\RaTest\Base\Database';
+    return '\Emerap\Ra\Base\Database';
   }
 
   /**
    * @inheritdoc
    */
   public static function getRaDatatypeClass() {
-    return '\Emerap\RaTest\Core\Datatype';
+    return '\Emerap\Ra\Core\Datatype';
   }
 
   /**
    * @inheritdoc
    */
   public static function getRaDefinitionClass() {
-    return '\Emerap\RaTest\Core\Definition';
+    return '\Emerap\Ra\Core\Definition';
   }
 
   /**
    * @inheritdoc
    */
   public static function getRaErrorClass() {
-    return '\Emerap\RaTest\Core\Error';
+    return '\Emerap\Ra\Core\Error';
   }
 
   /**
    * @inheritdoc
    */
   public static function getRaMethodClass() {
-    return '\Emerap\RaTest\Core\Method';
+    return '\Emerap\Ra\Core\Method';
   }
 
   /**
    * @inheritdoc
    */
   public static function getRaParameterClass() {
-    return '\Emerap\RaTest\Core\Parameter';
+    return '\Emerap\Ra\Core\Parameter';
   }
 
   /**
    * @inheritdoc
    */
   public static function getRaResultClass() {
-    return '\Emerap\RaTest\Core\Result';
+    return '\Emerap\Ra\Core\Result';
   }
 
   /**
    * @inheritdoc
    */
   public static function getRaServerClientClass() {
-    return '\Emerap\RaTest\Core\ServerClient';
+    return '\Emerap\Ra\Core\ServerClient';
   }
 
   /**
    * @inheritdoc
    */
   public static function getRaTokenClass() {
-    return '\Emerap\RaTest\Core\Token';
+    return '\Emerap\Ra\Core\Token';
   }
 
 }
