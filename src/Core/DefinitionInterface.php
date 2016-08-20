@@ -22,7 +22,7 @@ interface DefinitionInterface {
    * Method callback.
    *
    * @param Parameter[] $params
-   * @return Result|Error
+   * @return mixed|Error
    */
   public function execute($params);
 
