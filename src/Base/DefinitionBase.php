@@ -4,38 +4,43 @@ namespace Emerap\Ra\Base;
 
 use Emerap\Ra\Core\DefinitionInterface;
 
+/**
+ * Class DefinitionBase.
+ *
+ * @package Emerap\Ra\Base
+ */
 abstract class DefinitionBase implements DefinitionInterface {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getMethodParams() {
     return array();
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getSection() {
     return 'Custom';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function isPublic() {
     return TRUE;
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getAccessCallback() {
     return array();
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getAccessParams() {
     return '';

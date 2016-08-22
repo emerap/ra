@@ -4,6 +4,11 @@ namespace Emerap\Ra\Core;
 
 use Emerap\Ra\RaConfig;
 
+/**
+ * Class Definition.
+ *
+ * @package Emerap\Ra\Core
+ */
 class Definition {
 
   protected $name = NULL;
@@ -17,13 +22,18 @@ class Definition {
   protected $log = FALSE;
   protected $error;
 
-  /** Static methods */
+  /**
+   * Static methods.
+   */
 
   /**
    * Check definition exist.
    *
-   * @param string $name - method name
-   * @return Error
+   * @param string $name
+   *   Method name.
+   *
+   * @return \Emerap\Ra\Core\Error
+   *   Error instance.
    */
   public static function isExist($name) {
     $error = RaConfig::instanceError();
@@ -35,6 +45,15 @@ class Definition {
     return $error;
   }
 
+  /**
+   * Get definition by method name.
+   *
+   * @param string $name
+   *   Method name.
+   *
+   * @return bool|\Emerap\Ra\Core\Definition
+   *   State or instance.
+   */
   public static function getDefinitionByName($name) {
     $definitions = RaConfig::getDefinitions();
     return (isset($definitions[$name])) ? $definitions[$name] : FALSE;
@@ -44,6 +63,7 @@ class Definition {
    * Check is wrong definition.
    *
    * @return bool
+   *   Error check state.
    */
   public function isError() {
     $check = $this->check();
@@ -54,59 +74,59 @@ class Definition {
    * Check is wrong definition helper.
    *
    * @return bool
+   *   State is wrong definition.
    */
   private function check() {
     switch (TRUE) {
 
-      // require name
+      // Require name.
       case is_null($this->getName()):
       case  empty($this->getName()):
         return FALSE;
-        break;
 
-      // require description
+      // Require description.
       case is_null($this->getDescription()):
       case  empty($this->getDescription()):
         return FALSE;
-        break;
 
-      // require method callback
+      // Require method callback.
       case is_null($this->getMethodCallback()):
       case  empty($this->getMethodCallback()):
         return FALSE;
-        break;
 
       case !function_exists($this->getMethodCallback()):
         return FALSE;
-        break;
 
-      // require method callback
+      // Require method callback.
       case  empty($this->getAccessCallback()):
         return FALSE;
-        break;
     }
 
     return TRUE;
   }
 
   /**
-   * Get definition name.
+   * GETTERS / SETTERS.
+   */
+
+  /**
+   * Get Definition name.
    *
    * @return string
+   *   Definition name.
    */
   public function getName() {
     return $this->name;
   }
 
   /**
-   * GETTERS / SETTERS
-   */
-
-  /**
    * Set definition name.
    *
    * @param string $name
+   *   Definition name.
+   *
    * @return $this
+   *   This.
    */
   public function setName($name) {
     $this->name = $name;

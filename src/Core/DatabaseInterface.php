@@ -1,15 +1,23 @@
 <?php
 
 namespace Emerap\Ra\Core;
-
+/**
+ * Interface DatabaseInterface.
+ *
+ * @package Emerap\Ra\Core
+ */
 interface DatabaseInterface {
 
   /**
    * Create new record on table.
    *
    * @param string $table
+   *   Table name.
    * @param array $fields
+   *   Fields data.
+   *
    * @return array|bool
+   *   State or fetched data.
    */
   public function create($table, $fields = array());
 
@@ -17,8 +25,12 @@ interface DatabaseInterface {
    * Read record from table.
    *
    * @param string $table
+   *   Table name.
    * @param array $fields
+   *   Fields data.
+   *
    * @return array|bool
+   *   State or fetched data.
    */
   public function read($table, $fields = array());
 
@@ -26,10 +38,16 @@ interface DatabaseInterface {
    * Update record from table.
    *
    * @param string $table
+   *   Table name.
    * @param string $field
-   * @param string $value
+   *   Field name.
+   * @param string|int $value
+   *   Field value.
    * @param array $fields
-   * @return string|bool
+   *   Fields data.
+   *
+   * @return array|bool State or fetched data.
+   *   State or fetched data.
    */
   public function update($table, $field, $value, $fields = array());
 
@@ -37,9 +55,14 @@ interface DatabaseInterface {
    * Delete record from table.
    *
    * @param string $table
+   *   Table name.
    * @param string $field
-   * @param string $value
-   * @return bool
+   *   Field name.
+   * @param string|int $value
+   *   Field value.
+   *
+   * @return array|bool State or fetched data.
+   *   State or fetched data.
    */
   public function delete($table, $field, $value);
 
