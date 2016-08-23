@@ -4,6 +4,11 @@ namespace Emerap\Ra\Core;
 
 use Emerap\Ra\RaConfig;
 
+/**
+ * Class Method.
+ *
+ * @package Emerap\Ra\Core
+ */
 class Method {
 
   protected $name = NULL;
@@ -14,7 +19,9 @@ class Method {
    * RcMethod constructor.
    *
    * @param string $name
+   *   Method name.
    * @param array $params
+   *   Method params.
    */
   public function __construct($name, $params = array()) {
     $this->setName($name);
@@ -25,13 +32,14 @@ class Method {
    * Check is available method for call.
    *
    * @return \Emerap\Ra\Core\Error
+   *   Error instance.
    */
   public function isAvailable() {
     $error = RaConfig::instanceError();
 
     if (!$this->getDefinition()) {
       $error->setCode(103);
-      $error->setVars(array('method' => $this->getName()));
+      $error->setPlaceholders(array('method' => $this->getName()));
       return $error;
     }
 
@@ -43,6 +51,7 @@ class Method {
    * Get method definition.
    *
    * @return \Emerap\Ra\Core\Definition|bool
+   *   Method definition instance or false.
    */
   public function getDefinition() {
     $definitions = RaConfig::getDefinitions();
@@ -53,50 +62,26 @@ class Method {
   }
 
   /**
-   * Get method field "name"
-   * @return String
-   */
-  public function getName() {
-    return $this->name;
-  }
-
-  /**
-   * Set method field "name"
-   * @param String $name
-   * @return $this
-   */
-  public function setName($name) {
-    $this->name = $name;
-    return $this;
-  }
-
-  /**
-   * GETTERS / SETTERS
-   */
-
-  /**
    * Check input params.
    *
    * @return \Emerap\Ra\Core\Error
+   *   Error instance.
    */
   public function checkParams() {
-
     $error = RaConfig::instanceError();
     $input_params = $this->getParams();
     $definition_params = $this->getDefinition()->getMethodParams();
     $passed_params = array();
 
-    /* @var $definition_params \Emerap\Ra\Core\Parameter[] */
     foreach ($definition_params as $parameter) {
       $value = NULL;
-
-      // Обязательный аргумент должен быть задан, если аргумента нет выдаем ошибку
+      // Required param don't be empty. If param is empty return error.
       if ($parameter->isRequire()) {
         if (isset($input_params[$parameter->getName()])) {
 
           if (empty($input_params[$parameter->getName()])) {
             $error->setCode(105);
-            $error->setVars(array('parameter' => $parameter->getName()));
+            $error->setPlaceholders(array('parameter' => $parameter->getName()));
             return $error;
           }
 
@@ -104,12 +89,12 @@ class Method {
         }
         else {
           $error->setCode(104);
-          $error->setVars(array('parameter' => $parameter->getName()));
+          $error->setPlaceholders(array('parameter' => $parameter->getName()));
           return $error;
         }
       }
 
-      // Необязательный аргумент
+      // Optional value for param.
       if (!$parameter->isRequire()) {
         if (isset($input_params[$parameter->getName()])) {
           $value = $input_params[$parameter->getName()];
@@ -119,9 +104,9 @@ class Method {
         }
       }
 
-      // Приводим к нужному типу аргумент
+      // Get param datatype instance.
       $type = $parameter->getTypeObject();
-
+      // Datatype check method.
       $check_status = $type->check($value, $this->getDefinition());
 
       if ($check_status instanceof Error) {
@@ -130,7 +115,7 @@ class Method {
 
       if ($check_status === FALSE) {
         $error->setCode(300)
-          ->setVars(array('parameter' => $parameter->getName()));
+          ->setPlaceholders(array('parameter' => $parameter->getName()));
         return $error;
       }
 
@@ -142,9 +127,48 @@ class Method {
   }
 
   /**
+   * Method call.
+   *
+   * @return mixed
+   *   Callback result.
+   */
+  public function call() {
+    return call_user_func($this->getDefinition()->getMethodCallback(),
+      $this->getParams());
+  }
+
+  /**
+   * GETTERS / SETTERS.
+   */
+
+  /**
+   * Get method name.
+   *
+   * @return string
+   *   Method name.
+   */
+  public function getName() {
+    return $this->name;
+  }
+
+  /**
+   * Set method name.
+   *
+   * @param string $name
+   *   Method name.
+   *
+   * @return $this
+   */
+  public function setName($name) {
+    $this->name = $name;
+    return $this;
+  }
+
+  /**
    * Get method params.
    *
    * @return array
+   *   Method params.
    */
   public function getParams() {
     return $this->params;
@@ -154,6 +178,8 @@ class Method {
    * Set method params.
    *
    * @param array $params
+   *   Method params.
+   *
    * @return $this
    */
   public function setParams($params) {
@@ -167,29 +193,24 @@ class Method {
   }
 
   /**
-   * Method call.
+   * Get method error.
    *
-   * @return mixed
-   */
-  public function call() {
-    return call_user_func($this->getDefinition()->getMethodCallback(),
-      $this->getParams());
-  }
-
-  /**
-   * Get method field "error"
    * @return Error
+   *   Method error.
    */
   public function getError() {
     return $this->error;
   }
 
   /**
-   * Set method field "error"
-   * @param Error $error
+   * Set method error.
+   *
+   * @param \Emerap\Ra\Core\Error $error
+   *   Method error.
+   *
    * @return $this
    */
-  public function setError($error) {
+  public function setError(Error $error) {
     $this->error = $error;
     return $this;
   }

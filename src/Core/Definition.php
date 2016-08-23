@@ -19,7 +19,6 @@ class Definition {
   protected $accessArguments = array();
   protected $section = 'General';
   protected $security = FALSE;
-  protected $log = FALSE;
   protected $error;
 
   /**
@@ -40,7 +39,7 @@ class Definition {
 
     if (!self::getDefinitionByName($name)) {
       $error->setCode(103);
-      $error->setVars(array('method' => $name));
+      $error->setPlaceholders(array('method' => $name));
     }
     return $error;
   }
@@ -106,6 +105,31 @@ class Definition {
   }
 
   /**
+   * Setup global params.
+   */
+  public function setupGlobalParams() {
+
+    $params = $this->methodParams;
+
+    $formats = [];
+    foreach (RaConfig::getFormats() as $format) {
+      $formats[$format->getType()] = $format->getDescription();
+    }
+
+    $param_format = RaConfig::instanceParam('format', 'json')
+      ->setOptions($formats)
+      ->setHelp('Output format for representing result ');
+
+    $params['format'] = $param_format;
+
+    if ($this->isSecurity()) {
+      $params['token'] = new Parameter('token', NULL, 'token');
+    }
+
+    $this->setMethodParams($params);
+  }
+
+  /**
    * GETTERS / SETTERS.
    */
 
@@ -126,7 +150,6 @@ class Definition {
    *   Definition name.
    *
    * @return $this
-   *   This.
    */
   public function setName($name) {
     $this->name = $name;
@@ -137,6 +160,7 @@ class Definition {
    * Get definition description.
    *
    * @return string
+   *   Definition description.
    */
   public function getDescription() {
     return $this->description;
@@ -146,6 +170,8 @@ class Definition {
    * Set definition description.
    *
    * @param string $description
+   *    Definition description.
+   *
    * @return $this
    */
   public function setDescription($description) {
@@ -157,6 +183,7 @@ class Definition {
    * Get definition method callback.
    *
    * @return string
+   *   Definition method callback.
    */
   public function getMethodCallback() {
     return $this->methodCallback;
@@ -166,7 +193,10 @@ class Definition {
    * Set definition method callback.
    *
    * @param string|object $class
+   *   Definition method callback.
    * @param string $method
+   *   Method name.
+   *
    * @return $this
    */
   public function setMethodCallback($class, $method) {
@@ -178,6 +208,7 @@ class Definition {
    * Get definition access callback.
    *
    * @return array|string
+   *   Definition access callback.
    */
   public function getAccessCallback() {
     return $this->accessCallback;
@@ -187,6 +218,8 @@ class Definition {
    * Set definition access callback.
    *
    * @param array|string $callback
+   *   Definition access callback.
+   *
    * @return $this
    */
   public function setAccessCallback($callback) {
@@ -198,6 +231,7 @@ class Definition {
    * Get definition method params.
    *
    * @return \Emerap\Ra\Core\Parameter[]
+   *   Definition method params.
    */
   public function getMethodParams() {
     $this->setupGlobalParams();
@@ -208,6 +242,8 @@ class Definition {
    * Set definition method params.
    *
    * @param array $params
+   *   Definition method params.
+   *
    * @return $this
    */
   public function setMethodParams($params) {
@@ -216,35 +252,10 @@ class Definition {
   }
 
   /**
-   * Setup global params.
-   */
-  public function setupGlobalParams() {
-
-    $params = $this->methodParams;
-
-    $formats = [];
-    /** @var  $format FormatInterface */
-    foreach (RaConfig::getFormats() as $format) {
-      $formats[$format->getType()] = $format->getDescription();
-    }
-
-    $param_format = RaConfig::instanceParam('format', 'json')
-      ->setOptions($formats)
-      ->setHelp('Output format for representing result ');
-
-    $params['format'] = $param_format;
-
-    if ($this->isSecurity()) {
-      $params['token'] = new Parameter('token', NULL, 'token');
-    }
-
-    $this->setMethodParams($params);
-  }
-
-  /**
    * Get definition security.
    *
    * @return bool
+   *   Definition security.
    */
   public function isSecurity() {
     return $this->security;
@@ -254,6 +265,8 @@ class Definition {
    * Set definition security.
    *
    * @param bool $security
+   *   Definition security state.
+   *
    * @return $this
    */
   public function setSecurity($security) {
@@ -265,6 +278,7 @@ class Definition {
    * Get definition access params.
    *
    * @return array|string
+   *   Definition access params.
    */
   public function getAccessParams() {
     return $this->accessArguments;
@@ -274,6 +288,8 @@ class Definition {
    * Set definition access params.
    *
    * @param array $params
+   *   Definition access params.
+   *
    * @return $this
    */
   public function setAccessArguments($params) {
@@ -285,6 +301,7 @@ class Definition {
    * Get definition section.
    *
    * @return string
+   *   Definition section.
    */
   public function getSection() {
     return $this->section;
@@ -294,50 +311,12 @@ class Definition {
    * Set definition section.
    *
    * @param string $section
+   *   Definition section.
+   *
    * @return $this
    */
   public function setSection($section) {
     $this->section = $section;
-    return $this;
-  }
-
-  /**
-   * Get definition log.
-   *
-   * @return bool
-   */
-  public function isLog() {
-    return $this->log;
-  }
-
-  /**
-   * Set definition log.
-   *
-   * @param bool $log
-   * @return $this
-   */
-  public function setLog($log) {
-    $this->log = $log;
-    return $this;
-  }
-
-  /**
-   * Get definition error.
-   *
-   * @return bool
-   */
-  public function getError() {
-    return $this->error;
-  }
-
-  /**
-   * Set definition error.
-   *
-   * @param bool $error
-   * @return $this
-   */
-  public function setError($error) {
-    $this->error = $error;
     return $this;
   }
 

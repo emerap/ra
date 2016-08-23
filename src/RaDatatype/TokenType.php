@@ -3,6 +3,7 @@
 namespace Emerap\Ra\RaDatatype;
 
 use Emerap\Ra\Base\DatatypeBase;
+use Emerap\Ra\Core\Definition;
 use Emerap\Ra\RaConfig;
 
 class TokenType extends DatatypeBase {
@@ -31,7 +32,7 @@ class TokenType extends DatatypeBase {
   /**
    * @inheritdoc
    */
-  public function check(&$value, $definition) {
+  public function check(&$value, Definition $definition) {
     if ($definition->isSecurity()) {
       $token = RaConfig::instanceToken()->isToken($value);
       if ($token instanceof \Emerap\Ra\Core\Error) {

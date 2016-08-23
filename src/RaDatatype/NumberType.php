@@ -3,6 +3,7 @@
 namespace Emerap\Ra\RaDatatype;
 
 use Emerap\Ra\Base\DatatypeBase;
+use Emerap\Ra\Core\Definition;
 
 class NumberType extends DatatypeBase {
 
@@ -30,7 +31,7 @@ class NumberType extends DatatypeBase {
   /**
    * @inheritdoc
    */
-  public function check(&$value, $definition) {
+  public function check(&$value, Definition $definition) {
     $value = (int) $value;
     return $value;
   }

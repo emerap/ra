@@ -4,31 +4,37 @@ namespace Emerap\Ra\Core;
 
 use Emerap\Ra\RaConfig;
 
+/**
+ * Class Error.
+ *
+ * @package Emerap\Ra\Core
+ */
 class Error {
 
   protected $code = 0;
-  protected $vars = array();
-  protected $lang_code = 'en';
+  protected $placeholders = array();
+  protected $langCode = 'en';
 
   /**
-   * RaError constructor.
+   * Error constructor.
    *
    * @param int $code
-   * @param array $vars
+   *   Error code.
+   * @param array $placeholders
+   *   Error placeholders.
    */
-  public function __construct($code = 0, $vars = array()) {
-    $this->setCode($code)->setVars($vars);
+  public function __construct($code = 0, $placeholders = array()) {
+    $this->setCode($code)->setPlaceholders($placeholders);
   }
 
   /**
    * Get error message.
    *
    * @return string
+   *   Error message.
    */
   public function getMessage() {
-
     $errors = RaConfig::getErrorsList();
-
     if (isset($errors[$this->getCode()])) {
       return $this->preprocessMessage($errors[$this->getCode()]);
     }
@@ -36,9 +42,27 @@ class Error {
   }
 
   /**
+   * Preprocess error message.
+   *
+   * @param string $message
+   *   Message with placeholders.
+   *
+   * @return string
+   *   Preprocessing message.
+   */
+  public function preprocessMessage($message) {
+    return $message;
+  }
+
+  /**
+   * GETTERS / SETTERS.
+   */
+
+  /**
    * Get error code.
    *
    * @return int
+   *   Error code.
    */
   public function getCode() {
     return $this->code;
@@ -48,6 +72,8 @@ class Error {
    * Set error code.
    *
    * @param int $code
+   *   Error code.
+   *
    * @return $this
    */
   public function setCode($code) {
@@ -56,45 +82,35 @@ class Error {
   }
 
   /**
-   * GETTERS / SETTERS
-   */
-
-  /**
-   * Preprocess error message.
-   *
-   * @param string $message
-   * @return string
-   */
-  public function preprocessMessage($message) {
-    return $message;
-  }
-
-  /**
    * Check error status.
    *
    * @return bool
+   *   Error code state.
    */
   public function isError() {
     return (bool) $this->getCode();
   }
 
   /**
-   * Get error vars.
+   * Get error placeholders.
    *
    * @return array
+   *   Error placeholders.
    */
-  public function getVars() {
-    return $this->vars;
+  public function getPlaceholders() {
+    return $this->placeholders;
   }
 
   /**
-   * Set error vars.
+   * Set error placeholders.
    *
-   * @param array $vars
+   * @param array $placeholders
+   *   Error placeholders.
+   *
    * @return $this
    */
-  public function setVars($vars) {
-    $this->vars = $vars;
+  public function setPlaceholders($placeholders) {
+    $this->placeholders = $placeholders;
     return $this;
   }
 
@@ -102,19 +118,22 @@ class Error {
    * Get error lang_code.
    *
    * @return string
+   *   Language code (domain)
    */
   public function getLangCode() {
-    return $this->lang_code;
+    return $this->langCode;
   }
 
   /**
    * Set error lang_code.
    *
-   * @param string $lang_code
+   * @param string $langCode
+   *   Language code.
+   *
    * @return $this
    */
-  public function setLangCode($lang_code) {
-    $this->lang_code = $lang_code;
+  public function setLangCode($langCode) {
+    $this->langCode = $langCode;
     return $this;
   }
 

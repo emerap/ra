@@ -2,12 +2,18 @@
 
 namespace Emerap\Ra\Core;
 
+/**
+ * Interface DefinitionInterface.
+ *
+ * @package Emerap\Ra\Core
+ */
 interface DefinitionInterface {
 
   /**
    * Method name.
    *
    * @return string
+   *   Method name.
    */
   public function getMethodName();
 
@@ -15,6 +21,7 @@ interface DefinitionInterface {
    * Method params.
    *
    * @return string
+   *   Method params.
    */
   public function getMethodParams();
 
@@ -22,7 +29,10 @@ interface DefinitionInterface {
    * Method callback.
    *
    * @param Parameter[] $params
+   *   Method params.
+   *
    * @return mixed|Error
+   *   Error or mixed data.
    */
   public function execute($params);
 
@@ -30,6 +40,7 @@ interface DefinitionInterface {
    * Method description.
    *
    * @return string
+   *   Method description.
    */
   public function getDescription();
 
@@ -37,6 +48,7 @@ interface DefinitionInterface {
    * Method section.
    *
    * @return string
+   *   Method section.
    */
   public function getSection();
 
@@ -44,6 +56,7 @@ interface DefinitionInterface {
    * Method security.
    *
    * @return bool
+   *   Security state.
    */
   public function isPublic();
 
@@ -51,6 +64,7 @@ interface DefinitionInterface {
    * Method access callback.
    *
    * @return string
+   *   Method access callback.
    */
   public function getAccessCallback();
 
@@ -58,6 +72,7 @@ interface DefinitionInterface {
    * Method access parameters.
    *
    * @return array
+   *   Method access params.
    */
   public function getAccessParams();
 
