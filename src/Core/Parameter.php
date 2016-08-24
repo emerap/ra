@@ -30,7 +30,7 @@ class Parameter {
    */
   public function __construct($name, $default = NULL, $type = NULL) {
     $this->setName($name);
-    $type = (is_null($type)) ? RaConfig::getDefaultDataType() : $type;
+    $type = (is_null($type)) ? RaConfig::getDefaultDatatype() : $type;
     $this->setType($type);
 
     if (!is_null($default)) {
