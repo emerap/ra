@@ -4,6 +4,11 @@ namespace Emerap\Ra\Core;
 
 use Emerap\Ra\RaConfig;
 
+/**
+ * Class Parameter.
+ *
+ * @package Emerap\Ra\Core
+ */
 class Parameter {
 
   protected $name;
@@ -17,13 +22,13 @@ class Parameter {
    * RaParameter constructor.
    *
    * @param string $name
+   *   Param name.
    * @param bool $default
+   *   Default value, if value is NULL when required param.
    * @param string $type
+   *   Param type (datatype id)
    */
   public function __construct($name, $default = NULL, $type = NULL) {
-
-    // Заполняем имя, тип
-    // и если указано значение по умолчанию то параметр делаем необязательным
     $this->setName($name);
     $type = (is_null($type)) ? RaConfig::getDefaultDataType() : $type;
     $this->setType($type);
@@ -38,6 +43,7 @@ class Parameter {
    * Get RaDatatype object.
    *
    * @return \Emerap\Ra\Core\DatatypeInterface|bool
+   *   Datatype instance or false.
    */
   public function getTypeObject() {
     $type = RaConfig::instanceDataType();
@@ -45,23 +51,26 @@ class Parameter {
   }
 
   /**
-   * GETTERS / SETTERS
+   * GETTERS / SETTERS.
    */
 
   /**
-   * Get param type.
+   * Get parameter type.
    *
    * @return string
+   *   Parameter type.
    */
   public function getType() {
     return $this->type;
   }
 
   /**
-   * Set param type.
+   * Set parameter type.
    *
    * @param string $type
-   * @return \Emerap\Ra\Core\Parameter
+   *   Parameter type.
+   *
+   * @return $this
    */
   public function setType($type) {
     $this->type = $type;
@@ -72,16 +81,19 @@ class Parameter {
    * Get parameter name.
    *
    * @return string
+   *   Parameter name.
    */
   public function getName() {
     return $this->name;
   }
 
   /**
-   * Set param name.
+   * Set parameter name.
    *
    * @param string $name
-   * @return \Emerap\Ra\Core\Parameter
+   *   Parameter name.
+   *
+   * @return $this
    */
   public function setName($name) {
     $this->name = $name;
@@ -89,19 +101,22 @@ class Parameter {
   }
 
   /**
-   * Get param require.
+   * Is parameter require.
    *
    * @return bool
+   *   Require state.
    */
   public function isRequire() {
     return $this->require;
   }
 
   /**
-   * Set param require.
+   * Set parameter require.
    *
    * @param bool $require
-   * @return \Emerap\Ra\Core\Parameter
+   *   Require state.
+   *
+   * @return $this
    */
   public function setRequire($require) {
     $this->require = $require;
@@ -112,15 +127,18 @@ class Parameter {
    * Get param default.
    *
    * @return bool|string|int|float|null
+   *   Default value.
    */
   public function getDefault() {
     return $this->default;
   }
 
   /**
-   * Set param default.
+   * Set parameter default.
    *
    * @param bool|string|int|float|null $default
+   *   Default value.
+   *
    * @return $this
    */
   public function setDefault($default) {
@@ -129,19 +147,22 @@ class Parameter {
   }
 
   /**
-   * Get param options.
+   * Get parameter options.
    *
    * @return array
+   *   Parameter options.
    */
   public function getOptions() {
     return $this->options;
   }
 
   /**
-   * Set param options.
+   * Set parameter options.
    *
    * @param array $options
-   * @return $this;
+   *   Parameter options.
+   *
+   * @return $this
    */
   public function setOptions($options) {
     $this->options = $options;
@@ -149,18 +170,21 @@ class Parameter {
   }
 
   /**
-   * Get param help.
+   * Get parameter help.
    *
    * @return string
+   *   Parameter help.
    */
   public function getHelp() {
     return $this->help;
   }
 
   /**
-   * Set param help.
+   * Set parameter help.
    *
    * @param string $help
+   *   Parameter help.
+   *
    * @return $this
    */
   public function setHelp($help) {

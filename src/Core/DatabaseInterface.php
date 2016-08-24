@@ -1,6 +1,7 @@
 <?php
 
 namespace Emerap\Ra\Core;
+
 /**
  * Interface DatabaseInterface.
  *

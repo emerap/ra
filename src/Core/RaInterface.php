@@ -2,12 +2,18 @@
 
 namespace Emerap\Ra\Core;
 
+/**
+ * Interface RaInterface.
+ *
+ * @package Emerap\Ra\Core
+ */
 interface RaInterface {
 
   /**
    * Get current engine.
    *
    * @return string
+   *   Engine.
    */
   public static function getEngine();
 
@@ -15,14 +21,18 @@ interface RaInterface {
    * Get User ID.
    *
    * @param int $user_id
+   *   User id.
+   *
    * @return int
+   *   User id.
    */
-  public static function getUserID($user_id = NULL);
+  public static function getUserId($user_id = NULL);
 
   /**
    * Get RaBase class name.
    *
    * @return string
+   *   RaBase class name.
    */
   public static function getRaBaseClass();
 
@@ -30,6 +40,7 @@ interface RaInterface {
    * Get Ra class name.
    *
    * @return string
+   *   Ra class name.
    */
   public static function getRaClass();
 
@@ -37,6 +48,7 @@ interface RaInterface {
    * Get RaDataBase class name.
    *
    * @return string
+   *   RaDataBase class name.
    */
   public static function getRaDatabaseClass();
 
@@ -44,6 +56,7 @@ interface RaInterface {
    * Get RaDatatype class name.
    *
    * @return string
+   *   RaDatatype class name.
    */
   public static function getRaDatatypeClass();
 
@@ -51,6 +64,7 @@ interface RaInterface {
    * Get RaDefinition class name.
    *
    * @return string
+   *   RaDefinition class name.
    */
   public static function getRaDefinitionClass();
 
@@ -58,6 +72,7 @@ interface RaInterface {
    * Get RaError class name.
    *
    * @return string
+   *   RaError class name.
    */
   public static function getRaErrorClass();
 
@@ -65,13 +80,15 @@ interface RaInterface {
    * Get RaMethod class name.
    *
    * @return string
+   *   RaMethod class name.
    */
   public static function getRaMethodClass();
 
   /**
-   * Get RaArgument class name.
+   * Get RaParameter class name.
    *
    * @return string
+   *   RaParameter class name.
    */
   public static function getRaParameterClass();
 
@@ -79,6 +96,7 @@ interface RaInterface {
    * Get RaResult class name.
    *
    * @return string
+   *   RaResult class name.
    */
   public static function getRaResultClass();
 
@@ -86,6 +104,7 @@ interface RaInterface {
    * Get RaServerClient class name.
    *
    * @return string
+   *   RaServerClient class name.
    */
   public static function getRaServerClientClass();
 
@@ -93,6 +112,7 @@ interface RaInterface {
    * Get RaToken class name.
    *
    * @return string
+   *   RaToken class name.
    */
   public static function getRaTokenClass();
 
