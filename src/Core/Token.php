@@ -4,21 +4,36 @@ namespace Emerap\Ra\Core;
 
 use Emerap\Ra\RaConfig;
 
+/**
+ * Class Token.
+ *
+ * @package Emerap\Ra\Core
+ */
 class Token {
 
-  protected $client_id;
-  protected $user_id = 0;
-  protected $token = '';
-  protected $expire = 0;
+  protected $clientId;
+  protected $userId;
+  protected $token;
+  protected $expire;
+
+  /**
+   * Token constructor.
+   */
+  public function __construct() {
+    $this->setUseId(0)->setExpire(0)->setToken('');
+  }
 
   /**
    * Get token object by client id.
    *
    * @param string $client_id
+   *   Client id.
+   *
    * @return \Emerap\Ra\Core\Token|bool
+   *   Token instance or false.
    */
   public function getTokenObject($client_id) {
-    $token_obj = RaConfig::instanceDataBase()
+    $token_obj = RaConfig::instanceDatabase()
       ->read(RaConfig::getTableClient(), ['client_id' => $client_id]);
 
     if ($token_obj) {
@@ -35,10 +50,13 @@ class Token {
    * If token exist return token object.
    *
    * @param string $token
+   *   Token.
+   *
    * @return \Emerap\Ra\Core\Token|\Emerap\Ra\Core\Error
+   *   Token or Error instance.
    */
   public function isToken($token) {
-    $token_array = RaConfig::instanceDataBase()
+    $token_array = RaConfig::instanceDatabase()
       ->read(RaConfig::getTableClient(),
         ['token' => $token]);
     if (is_array($token_array) && ($token_array['token'] == $token)) {
@@ -55,12 +73,15 @@ class Token {
    * Update token.
    *
    * @param string $client_id
+   *   Client id.
+   *
    * @return bool|string
+   *   New token string.
    */
   public function updateToken($client_id) {
     $new_token = RaConfig::uniqueString('token', 32);
 
-    $status = RaConfig::instanceDataBase()
+    $status = RaConfig::instanceDatabase()
       ->update(RaConfig::getTableClient(), 'client_id', $client_id,
         [
           'token' => $new_token,
@@ -77,20 +98,27 @@ class Token {
    * Save token object on database.
    *
    * @param string $client_id
+   *   Client id.
    * @param \Emerap\Ra\Core\Token $token
+   *   Token instance.
+   *
    * @return bool|string
+   *   Operation state.
    */
   public function saveTokenObject($client_id, Token $token) {
-    return RaConfig::instanceDataBase()
+    return RaConfig::instanceDatabase()
       ->update(RaConfig::getTableClient(), 'client_id', $client_id,
         $this->fields($token));
   }
 
   /**
-   * Helper to get fields array from RaToken.
+   * Helper to get fields array from Token.
    *
    * @param \Emerap\Ra\Core\Token $token
+   *   Token instance.
+   *
    * @return array
+   *   Token fields.
    */
   private function fields(Token $token) {
     $fields = [];
@@ -103,24 +131,70 @@ class Token {
   }
 
   /**
+   * Get token expire status.
+   *
+   * @return bool
+   *   Expire status.
+   */
+  public function isExpired() {
+    return (time() < $this->getExpire());
+  }
+
+  /**
+   * GETTERS & SETTERS.
+   */
+
+  /**
+   * Get token client id.
+   *
+   * @return string
+   *   Token client id.
+   */
+  public function getClientId() {
+    return $this->clientId;
+  }
+
+  /**
+   * Set token client id.
+   *
+   * @param string $client_id
+   *   Token client id.
+   *
+   * @return $this
+   */
+  public function setClientId($client_id) {
+    $this->clientId = $client_id;
+    return $this;
+  }
+
+  /**
    * Get token user id.
    *
    * @return int
+   *   Token user id.
    */
   public function getUserId() {
-    return $this->user_id;
+    return $this->userId;
   }
 
-
-
   /**
-   * GETTERS & SETTERS
+   * Set token user id.
+   *
+   * @param int $user_id
+   *   Token user id.
+   *
+   * @return $this
    */
+  public function setUseId($user_id) {
+    $this->userId = $user_id;
+    return $this;
+  }
 
   /**
-   * Get token.
+   * Get token string.
    *
    * @return string
+   *   Token string.
    */
   public function getToken() {
     return $this->token;
@@ -130,6 +204,8 @@ class Token {
    * Set token.
    *
    * @param string $token
+   *   Token string.
+   *
    * @return $this
    */
   public function setToken($token) {
@@ -138,18 +214,10 @@ class Token {
   }
 
   /**
-   * Get token expire status.
-   *
-   * @return bool
-   */
-  public function isExpired() {
-    return (time() < $this->getExpire());
-  }
-
-  /**
    * Get token expire.
    *
    * @return int
+   *   Token expire.
    */
   public function getExpire() {
     return $this->expire;
@@ -159,41 +227,12 @@ class Token {
    * Set token expire.
    *
    * @param int $expire
+   *   Token expire.
+   *
    * @return $this
    */
   public function setExpire($expire = NULL) {
     $this->expire = $expire;
-    return $this;
-  }
-
-  /**
-   * Get token client id.
-   *
-   * @return string
-   */
-  public function getClientId() {
-    return $this->client_id;
-  }
-
-  /**
-   * Set token client id.
-   *
-   * @param string $client_id
-   * @return $this
-   */
-  public function setClientId($client_id) {
-    $this->client_id = $client_id;
-    return $this;
-  }
-
-  /**
-   * Set token user id.
-   *
-   * @param int $user_id
-   * @return $this
-   */
-  public function setUseId($user_id) {
-    $this->user_id = $user_id;
     return $this;
   }
 

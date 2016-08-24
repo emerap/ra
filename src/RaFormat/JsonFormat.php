@@ -4,36 +4,36 @@ namespace Emerap\Ra\RaFormat;
 
 use Emerap\Ra\Base\FormatBase;
 
+/**
+ * Class JsonFormat.
+ *
+ * @package Emerap\Ra\RaFormat
+ */
 class JsonFormat extends FormatBase {
 
   /**
-   * Get format title
-   * @return string
+   * {@inheritdoc}
    */
   public function getLabel() {
     return 'JSON';
   }
 
   /**
-   * Get format type
-   * @return string
+   * {@inheritdoc}
    */
   public function getType() {
     return 'json';
   }
 
   /**
-   * Get format description
-   * @return string
+   * {@inheritdoc}
    */
   public function getDescription() {
     return 'JSON serialize object';
   }
 
   /**
-   * Convert object to format
-   * @param mixed $object
-   * @return mixed
+   * {@inheritdoc}
    */
   public function convert($object) {
     return json_encode($object, JSON_UNESCAPED_UNICODE);

@@ -5,17 +5,22 @@ namespace Emerap\Ra\RaDefinition;
 use Emerap\Ra\Base\DefinitionBase;
 use Emerap\Ra\RaConfig;
 
+/**
+ * Class RaPairDefinition.
+ *
+ * @package Emerap\Ra\RaDefinition
+ */
 class RaPairDefinition extends DefinitionBase {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getMethodName() {
     return 'ra.pair';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getMethodParams() {
     return array(
@@ -27,7 +32,7 @@ class RaPairDefinition extends DefinitionBase {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function execute($params) {
     return RaConfig::instanceServerClient()
@@ -35,14 +40,14 @@ class RaPairDefinition extends DefinitionBase {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getDescription() {
     return 'Pairing with a new client';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getSection() {
     return 'Core';

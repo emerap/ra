@@ -4,24 +4,34 @@ namespace Emerap\Ra\Core;
 
 use Emerap\Ra\RaConfig;
 
+/**
+ * Class ServerClient.
+ *
+ * @package Emerap\Ra\Core
+ */
 class ServerClient {
 
-  protected $client_id;
+  protected $clientId;
   protected $tag;
   protected $platform;
   protected $token;
-  protected $user_id;
+  protected $userId;
   protected $status;
   protected $expire;
-  protected $log_id;
+  protected $logId;
 
   /**
    * Pair client.
    *
    * @param string $tag
+   *   Client tag.
    * @param int $pin
+   *   Pairing pin.
    * @param string $platform
+   *   Client platform.
+   *
    * @return array
+   *   Pairing information.
    */
   public function pair($tag, $pin, $platform) {
 
@@ -51,11 +61,9 @@ class ServerClient {
           'pin' => (int) $pin,
           'expire' => RaConfig::getExpireTime(),
         ];
-
-        /** @var \Emerap\Ra\Base\Database $ra_database */
-        $ra_database = RaConfig::instanceDataBase();
-        $ra_database->create(RaConfig::getTableClient(), $client_fields);
-        $ra_database->create(RaConfig::getTableInvite(), $pair_fields);
+        $database = RaConfig::instanceDatabase();
+        $database->create(RaConfig::getTableClient(), $client_fields);
+        $database->create(RaConfig::getTableInvite(), $pair_fields);
 
         $paired = TRUE;
       }
@@ -72,12 +80,17 @@ class ServerClient {
    * Activate client.
    *
    * @param string $invite_id
+   *   Invite id.
    * @param int $pin
+   *   Pairing pin.
    * @param int $user_id
-   * @return Error
+   *   User id.
+   *
+   * @return \Emerap\Ra\Core\Error
+   *   Error instance.
    */
   public function activate($invite_id, $pin, $user_id) {
-    $invite = RaConfig::instanceDataBase()
+    $invite = RaConfig::instanceDatabase()
       ->read(RaConfig::getTableInvite(), ['invite_id' => $invite_id]);
 
     if (is_array($invite)) {
@@ -93,13 +106,13 @@ class ServerClient {
       }
 
       if ($invite['expire'] < time()) {
-        RaConfig::instanceDataBase()
+        RaConfig::instanceDatabase()
           ->delete(RaConfig::getTableInvite(), 'client_id', $client->getClientId());
         return RaConfig::instanceError(400);
       }
 
       if (RaConfig::instanceServerClient()->update($client)) {
-        RaConfig::instanceDataBase()
+        RaConfig::instanceDatabase()
           ->delete(RaConfig::getTableInvite(), 'client_id', $client->getClientId());
         return RaConfig::instanceError();
       }
@@ -109,19 +122,20 @@ class ServerClient {
     return RaConfig::instanceError(402);
   }
 
-  /** CRUD operations */
-
   /**
-   * Save new client object to data base.
+   * Save new client object to database.
    *
    * @param array $fields
+   *   Fields.
+   *
    * @return string|bool
+   *   Client id or false.
    */
-  public function newClient($fields = []) {
-    if (!RaConfig::instanceDataBase()->read(RaConfig::getTableClient(),
+  public function newClient($fields = array()) {
+    if (!RaConfig::instanceDatabase()->read(RaConfig::getTableClient(),
       array('client_id' => $fields['client_id']))
     ) {
-      $req = RaConfig::instanceDataBase()
+      $req = RaConfig::instanceDatabase()
         ->create(RaConfig::getTableClient(), $fields);
       if (!is_null($req)) {
         return $fields['client_id'];
@@ -134,10 +148,13 @@ class ServerClient {
    * Get client by client_id.
    *
    * @param string $client_id
+   *   Client id.
+   *
    * @return \Emerap\Ra\Core\ServerClient|bool
+   *   ServerClient instance or false.
    */
   public function getClientById($client_id) {
-    if ($client = RaConfig::instanceDataBase()->read(RaConfig::getTableClient(),
+    if ($client = RaConfig::instanceDatabase()->read(RaConfig::getTableClient(),
       array('client_id' => $client_id))
     ) {
       return RaConfig::instanceServerClient()
@@ -157,11 +174,15 @@ class ServerClient {
    * Get client by tag.
    *
    * @param string $tag
+   *   Client tag.
    * @param int $user_id
+   *   User id.
+   *
    * @return \Emerap\Ra\Core\ServerClient|bool
+   *   ServerClient instance or false.
    */
   public function getClientByTag($tag, $user_id) {
-    if ($client = RaConfig::instanceDataBase()->read(RaConfig::getTableClient(),
+    if ($client = RaConfig::instanceDatabase()->read(RaConfig::getTableClient(),
       ['tag' => $tag, 'user_id' => $user_id])
     ) {
       return RaConfig::instanceServerClient()
@@ -181,22 +202,42 @@ class ServerClient {
    * Update client data to database.
    *
    * @param \Emerap\Ra\Core\ServerClient $client
+   *   ServerClient instance.
+   *
    * @return bool
+   *   Operation state.
    */
   public function update(ServerClient $client) {
     $fields = $this->fields($client);
     $client_id = $fields['client_id'];
     unset($fields['client_id']);
 
-    return RaConfig::instanceDataBase()
+    return RaConfig::instanceDatabase()
       ->update(RaConfig::getTableClient(), 'client_id', $client_id, $fields);
   }
 
   /**
-   * Helper to get fields array from RaServerClient.
+   * Delete client from table.
+   *
+   * @param string $client_id
+   *   Client id.
+   *
+   * @return bool
+   *   Operation state.
+   */
+  public function deleteClient($client_id) {
+    $ra_database = RaConfig::instanceDatabase();
+    return (bool) $ra_database->delete('ra_client', 'client_id', $client_id);
+  }
+
+  /**
+   * Helper to get fields array from ServerClient.
    *
    * @param \Emerap\Ra\Core\ServerClient $client
+   *   Client instance.
+   *
    * @return array
+   *   ServerClient fields.
    */
   private function fields(ServerClient $client) {
     $fields = [];
@@ -214,44 +255,52 @@ class ServerClient {
   }
 
   /**
+   * GETTERS & SETTERS.
+   */
+
+  /**
    * Get client id.
    *
    * @return string
+   *   Client id.
    */
   public function getClientId() {
-    return $this->client_id;
+    return $this->clientId;
   }
-
-  /** GETTERS & SETTERS */
 
   /**
    * Set client id.
    *
    * @param string $client_id
+   *   Client id.
+   *
    * @return $this
    */
   public function setClientId($client_id) {
-    $this->client_id = $client_id;
+    $this->clientId = $client_id;
     return $this;
   }
 
   /**
-   * Get client user_id.
+   * Get client user id.
    *
    * @return int
+   *   Client user id.
    */
   public function getUserId() {
-    return $this->user_id;
+    return $this->userId;
   }
 
   /**
-   * Set client user_id.
+   * Set client user id.
    *
    * @param int $user_id
+   *   Client user id.
+   *
    * @return $this
    */
   public function setUserId($user_id) {
-    $this->user_id = $user_id;
+    $this->userId = $user_id;
     return $this;
   }
 
@@ -259,6 +308,7 @@ class ServerClient {
    * Get client token.
    *
    * @return string
+   *   Client token.
    */
   public function getToken() {
     return $this->token;
@@ -268,6 +318,8 @@ class ServerClient {
    * Set client token.
    *
    * @param string $token
+   *   Client token.
+   *
    * @return $this
    */
   public function setToken($token) {
@@ -276,18 +328,33 @@ class ServerClient {
   }
 
   /**
-   * Get client status.
+   * Is client status.
    *
    * @return bool
+   *   Client status.
    */
   public function isStatus() {
     return $this->status;
   }
 
   /**
+   * Set client status.
+   *
+   * @param bool $status
+   *   Client status.
+   *
+   * @return $this
+   */
+  public function setStatus($status) {
+    $this->status = $status;
+    return $this;
+  }
+
+  /**
    * Get client tag.
    *
    * @return string
+   *   Client status.
    */
   public function getTag() {
     return $this->tag;
@@ -297,6 +364,8 @@ class ServerClient {
    * Set client tag.
    *
    * @param string $tag
+   *   Client tag.
+   *
    * @return $this
    */
   public function setTag($tag) {
@@ -308,6 +377,7 @@ class ServerClient {
    * Get client platform.
    *
    * @return string
+   *   Client platform.
    */
   public function getPlatform() {
     return $this->platform;
@@ -317,6 +387,8 @@ class ServerClient {
    * Set client platform.
    *
    * @param string $platform
+   *   Client platform.
+   *
    * @return $this
    */
   public function setPlatform($platform) {
@@ -328,6 +400,7 @@ class ServerClient {
    * Get client expire.
    *
    * @return int
+   *   Client expire.
    */
   public function getExpire() {
     return $this->expire;
@@ -337,6 +410,8 @@ class ServerClient {
    * Set client expire.
    *
    * @param int $expire
+   *   Client expire.
+   *
    * @return $this
    */
   public function setExpire($expire) {
@@ -345,44 +420,25 @@ class ServerClient {
   }
 
   /**
-   * Get client log_id.
+   * Get client log id.
    *
    * @return string
+   *   Client log id.
    */
   public function getLogId() {
-    return $this->log_id;
+    return $this->logId;
   }
 
   /**
-   * Set client log_id.
+   * Set client log id.
    *
    * @param string $log_id
+   *   Client log id.
+   *
    * @return $this
    */
   public function setLogId($log_id) {
-    $this->log_id = $log_id;
-    return $this;
-  }
-
-  /**
-   * Delete client from table.
-   *
-   * @param string $client_id
-   * @return bool
-   */
-  public function deleteClient($client_id) {
-    $ra_database = RaConfig::instanceDataBase();
-    return (bool) $ra_database->delete('ra_client', 'client_id', $client_id);
-  }
-
-  /**
-   * Set client status.
-   *
-   * @param bool $status
-   * @return $this
-   */
-  public function setStatus($status) {
-    $this->status = $status;
+    $this->logId = $log_id;
     return $this;
   }
 

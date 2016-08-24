@@ -5,31 +5,36 @@ namespace Emerap\Ra\RaDatatype;
 use Emerap\Ra\Base\DatatypeBase;
 use Emerap\Ra\Core\Definition;
 
+/**
+ * Class NumberType.
+ *
+ * @package Emerap\Ra\RaDatatype
+ */
 class NumberType extends DatatypeBase {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getLabel() {
     return 'Number';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getDescription() {
     return 'Simple number';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getType() {
     return 'number';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function check(&$value, Definition $definition) {
     $value = (int) $value;

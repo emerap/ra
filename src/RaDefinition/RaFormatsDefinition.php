@@ -5,17 +5,22 @@ namespace Emerap\Ra\RaDefinition;
 use Emerap\Ra\Base\DefinitionBase;
 use Emerap\Ra\RaConfig;
 
+/**
+ * Class RaFormatsDefinition.
+ *
+ * @package Emerap\Ra\RaDefinition
+ */
 class RaFormatsDefinition extends DefinitionBase {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getMethodName() {
     return 'ra.formats';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function execute($params) {
     $formats = array();
@@ -26,14 +31,14 @@ class RaFormatsDefinition extends DefinitionBase {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getDescription() {
     return 'All available formats';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getSection() {
     return 'Core';

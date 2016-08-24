@@ -5,31 +5,36 @@ namespace Emerap\Ra\RaDatatype;
 use Emerap\Ra\Base\DatatypeBase;
 use Emerap\Ra\Core\Definition;
 
+/**
+ * Class StringType.
+ *
+ * @package Emerap\Ra\RaDatatype
+ */
 class StringType extends DatatypeBase {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getLabel() {
     return 'String';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getDescription() {
     return 'Simple string';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getType() {
     return 'string';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function check(&$value, Definition $definition) {
     return is_string($value);

@@ -5,17 +5,22 @@ namespace Emerap\Ra\RaDefinition;
 use Emerap\Ra\Base\DefinitionBase;
 use Emerap\Ra\RaConfig;
 
+/**
+ * Class RaMethodsDefinition.
+ *
+ * @package Emerap\Ra\RaDefinition
+ */
 class RaMethodsDefinition extends DefinitionBase {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getMethodName() {
     return 'ra.methods';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function execute($params) {
     $methods = array();
@@ -26,14 +31,14 @@ class RaMethodsDefinition extends DefinitionBase {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getDescription() {
     return 'All available methods';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getSection() {
     return 'Core';

@@ -5,17 +5,22 @@ namespace Emerap\Ra\RaDefinition;
 use Emerap\Ra\Base\DefinitionBase;
 use Emerap\Ra\RaConfig;
 
+/**
+ * Class RaVersionDefinition.
+ *
+ * @package Emerap\Ra\RaDefinition
+ */
 class RaVersionDefinition extends DefinitionBase {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getMethodName() {
     return 'ra.version';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getMethodParams() {
     return array(
@@ -30,21 +35,21 @@ class RaVersionDefinition extends DefinitionBase {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function execute($params) {
     return RaConfig::instanceRa()->version($params['field']);
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getDescription() {
     return 'Get core version information';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getSection() {
     return 'Core';

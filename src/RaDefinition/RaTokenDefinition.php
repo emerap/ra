@@ -5,17 +5,22 @@ namespace Emerap\Ra\RaDefinition;
 use Emerap\Ra\Base\DefinitionBase;
 use Emerap\Ra\RaConfig;
 
+/**
+ * Class RaTokenDefinition.
+ *
+ * @package Emerap\Ra\RaDefinition
+ */
 class RaTokenDefinition extends DefinitionBase {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getMethodName() {
     return 'ra.token';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getMethodParams() {
     return array(
@@ -24,7 +29,7 @@ class RaTokenDefinition extends DefinitionBase {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function execute($params) {
     $req = RaConfig::instanceToken()->updateToken($params['client_id']);
@@ -32,14 +37,14 @@ class RaTokenDefinition extends DefinitionBase {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getDescription() {
     return 'Get token';
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function getSection() {
     return 'Core';
